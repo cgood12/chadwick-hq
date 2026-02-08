@@ -1,0 +1,66 @@
+{
+  "lastUpdated": "2026-02-03T21:10:00-06:00",
+  "columns": {
+    "backlog": {
+      "title": "Backlog",
+      "items": []
+    },
+    "inProgress": {
+      "title": "In Progress",
+      "items": [
+        {
+          "id": "chad-1",
+          "title": "🔧 Chad: Retell + OpenAI Setup",
+          "description": "Create accounts, add API keys, test apps",
+          "priority": "high",
+          "assignee": "Chad"
+        }
+      ]
+    },
+    "review": {
+      "title": "Review",
+      "items": [
+        {
+          "id": "review-1",
+          "title": "📦 Review Everything",
+          "description": "5 apps + 12 surprise deliverables ready for review",
+          "priority": "high"
+        }
+      ]
+    },
+    "done": {
+      "title": "Done",
+      "items": [
+        {"id": "app-1", "title": "✅ CallCatcher", "completed": "2026-02-03"},
+        {"id": "app-2", "title": "✅ Testimonial Agent", "completed": "2026-02-03"},
+        {"id": "app-3", "title": "✅ Ad Creative Factory", "completed": "2026-02-03"},
+        {"id": "app-4", "title": "✅ Competitor Intel", "completed": "2026-02-03"},
+        {"id": "app-5", "title": "✅ AI Tutor", "completed": "2026-02-03"},
+        {"id": "s-1", "title": "✅ Portfolio Page", "completed": "2026-02-03"},
+        {"id": "s-2", "title": "✅ Deployment Docs", "completed": "2026-02-03"},
+        {"id": "s-3", "title": "✅ Social Content", "completed": "2026-02-03"},
+        {"id": "s-4", "title": "✅ Outreach Templates", "completed": "2026-02-03"},
+        {"id": "s-5", "title": "✅ Lead Tracker", "completed": "2026-02-03"},
+        {"id": "s-6", "title": "✅ Command Center", "completed": "2026-02-03"},
+        {"id": "s-7", "title": "✅ Product Hunt Launch Kit", "completed": "2026-02-03"},
+        {"id": "s-8", "title": "✅ Blog Post + Content", "completed": "2026-02-03"},
+        {"id": "s-9", "title": "✅ Quote Generator", "completed": "2026-02-03"},
+        {"id": "s-10", "title": "✅ Revenue Model", "completed": "2026-02-03"},
+        {"id": "s-11", "title": "✅ Expenses Model", "completed": "2026-02-03"},
+        {"id": "s-12", "title": "✅ Customer Interviews", "completed": "2026-02-03"},
+        {"id": "s-13", "title": "✅ Email Sequence", "completed": "2026-02-03"},
+        {"id": "s-14", "title": "✅ Brand Guidelines", "completed": "2026-02-03"},
+        {"id": "s-15", "title": "✅ Battlecards", "completed": "2026-02-03"},
+        {"id": "s-16", "title": "✅ Video Scripts", "completed": "2026-02-03"},
+        {"id": "s-17", "title": "✅ 30-Day Action Plan", "completed": "2026-02-03"}
+      ]
+    }
+  },
+  "summary": {
+    "apps": 5,
+    "supportingAssets": 17,
+    "totalDeliverables": 22,
+    "overnightSurprises": 12
+  },
+  "notes": "🎩 'Surprise me' delivered. 5 apps + 17 supporting assets = 22 total deliverables in one day."
+}
