@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chadwick HQ</title>
+  <title>Chadwick HQ | Task Tracker</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -13,11 +13,13 @@
       --bg-secondary: #111113;
       --bg-card: #161618;
       --bg-hover: #1c1c1f;
+      --bg-modal: #1a1a1c;
       --border: #27272a;
       --text-primary: #fafafa;
       --text-secondary: #a1a1aa;
       --text-muted: #52525b;
       --accent: #8b5cf6;
+      --accent-hover: #7c3aed;
       --accent-glow: rgba(139, 92, 246, 0.15);
       --success: #22c55e;
       --warning: #f59e0b;
@@ -40,7 +42,7 @@
 
     /* Header */
     .header {
-      padding: 24px 32px;
+      padding: 20px 32px;
       border-bottom: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
@@ -59,18 +61,18 @@
     }
 
     .logo-icon {
-      width: 36px;
-      height: 36px;
+      width: 40px;
+      height: 40px;
       background: linear-gradient(135deg, var(--accent), #a78bfa);
       border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
+      font-size: 20px;
     }
 
     .logo-text {
-      font-size: 1.25rem;
+      font-size: 1.35rem;
       font-weight: 600;
       letter-spacing: -0.02em;
     }
@@ -83,14 +85,34 @@
     .header-right {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 12px;
+    }
+
+    .add-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      background: var(--accent);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .add-btn:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
     }
 
     .status-badge {
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 6px 12px;
+      padding: 8px 14px;
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 20px;
@@ -111,11 +133,6 @@
       50% { opacity: 0.5; }
     }
 
-    .last-updated {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-
     /* Board */
     .board-container {
       padding: 24px;
@@ -129,14 +146,14 @@
     }
 
     .column {
-      width: 320px;
-      min-width: 320px;
+      width: 340px;
+      min-width: 340px;
       background: var(--bg-secondary);
       border: 1px solid var(--border);
       border-radius: 12px;
       display: flex;
       flex-direction: column;
-      max-height: calc(100vh - 160px);
+      max-height: calc(100vh - 140px);
     }
 
     .column-header {
@@ -148,18 +165,18 @@
     }
 
     .column-title {
-      font-size: 0.875rem;
+      font-size: 0.9rem;
       font-weight: 600;
       color: var(--text-primary);
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
 
     .column-count {
       background: var(--bg-card);
       color: var(--text-muted);
-      padding: 2px 8px;
+      padding: 4px 10px;
       border-radius: 10px;
       font-size: 0.75rem;
       font-weight: 500;
@@ -178,10 +195,6 @@
       width: 4px;
     }
 
-    .column-body::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
     .column-body::-webkit-scrollbar-thumb {
       background: var(--border);
       border-radius: 2px;
@@ -191,162 +204,293 @@
     .card {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 14px;
+      border-radius: 10px;
+      padding: 16px;
       cursor: pointer;
       transition: all 0.2s ease;
+      position: relative;
     }
 
     .card:hover {
       background: var(--bg-hover);
       border-color: var(--accent);
       box-shadow: 0 0 0 1px var(--accent-glow), 0 4px 12px rgba(0,0,0,0.4);
-      transform: translateY(-1px);
+      transform: translateY(-2px);
     }
 
-    .card-priority {
-      width: 3px;
-      height: 100%;
+    .card-priority-bar {
       position: absolute;
       left: 0;
       top: 0;
-      border-radius: 8px 0 0 8px;
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 8px;
-    }
-
-    .card-title {
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: var(--text-primary);
-      line-height: 1.4;
-    }
-
-    .priority-indicator {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      flex-shrink: 0;
-      margin-top: 4px;
+      bottom: 0;
+      width: 4px;
+      border-radius: 10px 0 0 10px;
     }
 
     .priority-high { background: var(--danger); }
     .priority-medium { background: var(--warning); }
     .priority-low { background: var(--success); }
 
-    .card-description {
-      font-size: 0.8rem;
-      color: var(--text-secondary);
-      line-height: 1.5;
-      margin-bottom: 12px;
+    .card-title {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      line-height: 1.4;
+      margin-bottom: 8px;
+      padding-left: 8px;
     }
 
-    .card-footer {
+    .card-meta {
       display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-left: 8px;
       flex-wrap: wrap;
-      gap: 6px;
     }
 
-    .tag {
-      padding: 3px 8px;
+    .card-tag {
+      padding: 4px 10px;
       background: var(--accent-glow);
       color: var(--accent);
-      border-radius: 4px;
+      border-radius: 5px;
       font-size: 0.7rem;
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 0.02em;
     }
 
-    .tag.infrastructure { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
-    .tag.research { background: rgba(139, 92, 246, 0.15); color: #a78bfa; }
-    .tag.market { background: rgba(34, 197, 94, 0.15); color: #4ade80; }
-    .tag.planning { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
-    .tag.gov-tech { background: rgba(236, 72, 153, 0.15); color: #f472b6; }
+    .card-tag.mtr { background: rgba(234, 88, 12, 0.15); color: #fb923c; }
+    .card-tag.infra { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+    .card-tag.design { background: rgba(236, 72, 153, 0.15); color: #f472b6; }
+    .card-tag.marketing { background: rgba(34, 197, 94, 0.15); color: #4ade80; }
+    .card-tag.research { background: rgba(139, 92, 246, 0.15); color: #a78bfa; }
 
-    /* Empty State */
     .empty-state {
       text-align: center;
-      padding: 24px;
+      padding: 32px 16px;
       color: var(--text-muted);
-      font-size: 0.8rem;
+      font-size: 0.85rem;
     }
 
-    /* Notes Section */
-    .notes-section {
-      margin: 0 24px 24px;
-      padding: 20px;
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-    }
-
-    .notes-header {
-      display: flex;
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px);
+      display: none;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 12px;
-      font-size: 0.875rem;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--bg-modal);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 560px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+    }
+
+    .modal-header {
+      padding: 24px 24px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .modal-title {
+      font-size: 1.25rem;
       font-weight: 600;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+    }
+
+    .modal-close:hover {
       color: var(--text-primary);
     }
 
-    .notes-content {
-      font-size: 0.875rem;
+    .modal-body {
+      padding: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 500;
       color: var(--text-secondary);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .form-input, .form-textarea, .form-select {
+      width: 100%;
+      padding: 12px 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      font-family: inherit;
+      transition: border-color 0.2s;
+    }
+
+    .form-input:focus, .form-textarea:focus, .form-select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .form-textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .modal-actions {
+      padding: 0 24px 24px;
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+    }
+
+    .btn {
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+    }
+
+    .btn-secondary {
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-hover);
+      color: var(--text-primary);
+    }
+
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--danger);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .btn-danger:hover {
+      background: rgba(239, 68, 68, 0.25);
+    }
+
+    /* View Modal */
+    .task-detail {
+      margin-bottom: 20px;
+    }
+
+    .task-detail-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+
+    .task-detail-value {
+      font-size: 0.95rem;
+      color: var(--text-primary);
       line-height: 1.6;
     }
 
-    /* Refresh Button */
-    .refresh-btn {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      width: 48px;
-      height: 48px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      color: var(--text-secondary);
-      cursor: pointer;
-      display: flex;
+    .task-priority-badge {
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      transition: all 0.2s ease;
-      font-size: 1.2rem;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 500;
     }
 
-    .refresh-btn:hover {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: white;
-      transform: scale(1.05);
+    .task-priority-badge.high {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+    }
+
+    .task-priority-badge.medium {
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+    }
+
+    .task-priority-badge.low {
+      background: rgba(34, 197, 94, 0.15);
+      color: #4ade80;
+    }
+
+    .task-status-select {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
     }
 
     /* Column specific colors */
     .column.backlog .column-header { border-bottom-color: #52525b; }
+    .column.todo .column-header { border-bottom-color: #3b82f6; }
     .column.inProgress .column-header { border-bottom-color: #8b5cf6; }
-    .column.review .column-header { border-bottom-color: #f59e0b; }
     .column.done .column-header { border-bottom-color: #22c55e; }
   </style>
 </head>
 <body>
   <header class="header">
     <div class="logo">
-      <div class="logo-icon">🎩</div>
+      <div class="logo-icon">🪐</div>
       <div class="logo-text">Chadwick <span>HQ</span></div>
     </div>
     <div class="header-right">
+      <button class="add-btn" onclick="openAddModal()">
+        <span>+</span> Add Task
+      </button>
       <div class="status-badge">
         <div class="status-dot"></div>
-        <span>Online</span>
+        <span id="taskCount">0 tasks</span>
       </div>
-      <div class="last-updated" id="lastUpdated">Loading...</div>
     </div>
   </header>
 
@@ -354,111 +498,355 @@
     <div class="board" id="board"></div>
   </div>
 
-  <div class="notes-section" id="notesSection">
-    <div class="notes-header">📝 Current Focus</div>
-    <div class="notes-content" id="notesContent">Loading...</div>
+  <!-- Add/Edit Modal -->
+  <div class="modal-overlay" id="addModal">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title" id="modalTitle">Add Task</div>
+        <button class="modal-close" onclick="closeModal('addModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="editTaskId">
+        <div class="form-group">
+          <label class="form-label">Title</label>
+          <input type="text" class="form-input" id="taskTitle" placeholder="What needs to be done?">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <textarea class="form-textarea" id="taskDescription" placeholder="Add details, requirements, or notes..."></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Priority</label>
+            <select class="form-select" id="taskPriority">
+              <option value="high">🔴 High</option>
+              <option value="medium" selected>🟡 Medium</option>
+              <option value="low">🟢 Low</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Category</label>
+            <select class="form-select" id="taskCategory">
+              <option value="mtr">MTR Direct</option>
+              <option value="infra">Infrastructure</option>
+              <option value="design">Design</option>
+              <option value="marketing">Marketing</option>
+              <option value="research">Research</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Status</label>
+          <select class="form-select" id="taskStatus">
+            <option value="backlog">📋 Backlog</option>
+            <option value="todo" selected>📌 To Do</option>
+            <option value="inProgress">⚡ In Progress</option>
+            <option value="done">✅ Done</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeModal('addModal')">Cancel</button>
+        <button class="btn btn-primary" onclick="saveTask()">Save Task</button>
+      </div>
+    </div>
   </div>
 
-  <button class="refresh-btn" onclick="loadData()" title="Refresh">↻</button>
+  <!-- View Modal -->
+  <div class="modal-overlay" id="viewModal">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title" id="viewTitle">Task Details</div>
+        <button class="modal-close" onclick="closeModal('viewModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="task-detail">
+          <div class="task-detail-label">Description</div>
+          <div class="task-detail-value" id="viewDescription">-</div>
+        </div>
+        <div class="task-detail">
+          <div class="task-detail-label">Priority</div>
+          <div id="viewPriority"></div>
+        </div>
+        <div class="task-detail">
+          <div class="task-detail-label">Category</div>
+          <div class="task-detail-value" id="viewCategory">-</div>
+        </div>
+        <div class="task-status-select">
+          <div class="form-group">
+            <label class="form-label">Move to</label>
+            <select class="form-select" id="viewStatus" onchange="moveTask()">
+              <option value="backlog">📋 Backlog</option>
+              <option value="todo">📌 To Do</option>
+              <option value="inProgress">⚡ In Progress</option>
+              <option value="done">✅ Done</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-danger" onclick="deleteTask()">Delete</button>
+        <button class="btn btn-secondary" onclick="editCurrentTask()">Edit</button>
+        <button class="btn btn-primary" onclick="closeModal('viewModal')">Done</button>
+      </div>
+    </div>
+  </div>
 
   <script>
-    const columnMeta = {
+    // Column configuration
+    const columns = {
       backlog: { icon: '📋', title: 'Backlog' },
+      todo: { icon: '📌', title: 'To Do' },
       inProgress: { icon: '⚡', title: 'In Progress' },
-      review: { icon: '👀', title: 'Review' },
-      done: { icon: '✓', title: 'Done' }
+      done: { icon: '✅', title: 'Done' }
     };
 
-    async function loadData() {
-      try {
-        const res = await fetch('data.json?' + Date.now());
-        const data = await res.json();
-        renderBoard(data);
-      } catch (e) {
-        console.error('Failed to load data:', e);
+    const categoryLabels = {
+      mtr: 'MTR Direct',
+      infra: 'Infrastructure', 
+      design: 'Design',
+      marketing: 'Marketing',
+      research: 'Research'
+    };
+
+    let currentTaskId = null;
+
+    // Default tasks for MTR Direct project
+    const defaultTasks = [
+      // Backlog
+      { id: 'mtr-1', title: 'Set up Stripe payment processing', description: 'Integrate Stripe for monthly billing. Need to create Stripe account and add keys.', priority: 'medium', category: 'mtr', status: 'backlog' },
+      { id: 'mtr-2', title: 'Integrate tenant screening API', description: 'Research and integrate credit/background check API (TransUnion, Experian, or similar).', priority: 'medium', category: 'mtr', status: 'backlog' },
+      { id: 'mtr-3', title: 'Build lease generation system', description: 'Create MTR-specific lease templates with e-signature (DocuSign or HelloSign).', priority: 'medium', category: 'mtr', status: 'backlog' },
+      { id: 'mtr-4', title: 'Facebook Ads API integration', description: 'Set up Meta Business Suite and integrate Ads API for automated marketing.', priority: 'low', category: 'marketing', status: 'backlog' },
+      
+      // To Do
+      { id: 'mtr-5', title: 'Buy domain (mtrdirect.io)', description: 'Purchase domain from Namecheap or Cloudflare. Options: mtrdirect.io, mtrdirect.co, mtrhq.com', priority: 'high', category: 'infra', status: 'todo' },
+      { id: 'mtr-6', title: 'Set up Formspree for booking site', description: 'Create Formspree account and connect to the direct booking site inquiry form.', priority: 'high', category: 'mtr', status: 'todo' },
+      { id: 'mtr-7', title: 'Record property walkthrough video', description: 'Film a walkthrough of the San Antonio property for the booking site.', priority: 'high', category: 'marketing', status: 'todo' },
+      { id: 'mtr-8', title: 'Connect custom domain to Vercel', description: 'After buying domain, connect it to the Vercel deployments.', priority: 'medium', category: 'infra', status: 'todo' },
+      
+      // In Progress
+      { id: 'mtr-9', title: 'Launch weekend prep', description: 'Final checks before going live. Test all forms, links, and mobile responsiveness.', priority: 'high', category: 'mtr', status: 'inProgress' },
+      
+      // Done
+      { id: 'mtr-10', title: 'Build direct booking site', description: 'Created booking site with real photos, reviews, and inquiry form.', priority: 'high', category: 'mtr', status: 'done' },
+      { id: 'mtr-11', title: 'Create SaaS landing page', description: 'Built MTR Direct SaaS landing page with waitlist.', priority: 'high', category: 'mtr', status: 'done' },
+      { id: 'mtr-12', title: 'Design host dashboard mockup', description: 'Created full SaaS dashboard with kanban pipeline.', priority: 'medium', category: 'design', status: 'done' },
+      { id: 'mtr-13', title: 'Write business plan', description: 'Comprehensive business plan with pricing tiers and ROI pitch.', priority: 'medium', category: 'mtr', status: 'done' },
+      { id: 'mtr-14', title: 'Deploy to Vercel', description: 'Both booking site and SaaS landing are live on Vercel.', priority: 'high', category: 'infra', status: 'done' },
+      { id: 'mtr-15', title: 'Set up Telegram channels', description: 'Created HQ, MTR Project, Ideas, and Security channels.', priority: 'medium', category: 'infra', status: 'done' },
+    ];
+
+    // Load tasks from localStorage or use defaults
+    function loadTasks() {
+      const stored = localStorage.getItem('chadwick-tasks');
+      if (stored) {
+        return JSON.parse(stored);
       }
+      saveTasks(defaultTasks);
+      return defaultTasks;
     }
 
-    function formatDate(dateStr) {
-      const date = new Date(dateStr);
-      const now = new Date();
-      const diff = now - date;
-      
-      if (diff < 60000) return 'Just now';
-      if (diff < 3600000) return Math.floor(diff/60000) + 'm ago';
-      if (diff < 86400000) return Math.floor(diff/3600000) + 'h ago';
-      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    // Save tasks to localStorage
+    function saveTasks(tasks) {
+      localStorage.setItem('chadwick-tasks', JSON.stringify(tasks));
     }
 
-    function renderBoard(data) {
+    // Render the board
+    function renderBoard() {
+      const tasks = loadTasks();
       const board = document.getElementById('board');
-      const lastUpdated = document.getElementById('lastUpdated');
-      const notesContent = document.getElementById('notesContent');
-      
-      lastUpdated.textContent = 'Updated ' + formatDate(data.lastUpdated);
-      notesContent.textContent = data.notes || 'No notes yet.';
-      
       board.innerHTML = '';
-      
-      const columnOrder = ['backlog', 'inProgress', 'review', 'done'];
-      
-      for (const colKey of columnOrder) {
-        const col = data.columns[colKey];
-        if (!col) continue;
-        
-        const meta = columnMeta[colKey] || { icon: '📁', title: colKey };
-        
-        const colEl = document.createElement('div');
-        colEl.className = 'column ' + colKey;
-        
-        colEl.innerHTML = `
+
+      let totalActive = 0;
+
+      for (const [colKey, colMeta] of Object.entries(columns)) {
+        const colTasks = tasks.filter(t => t.status === colKey);
+        if (colKey !== 'done') totalActive += colTasks.length;
+
+        const col = document.createElement('div');
+        col.className = `column ${colKey}`;
+        col.innerHTML = `
           <div class="column-header">
             <div class="column-title">
-              <span>${meta.icon}</span>
-              <span>${meta.title}</span>
+              <span>${colMeta.icon}</span>
+              <span>${colMeta.title}</span>
             </div>
-            <span class="column-count">${col.items.length}</span>
+            <span class="column-count">${colTasks.length}</span>
           </div>
           <div class="column-body" id="col-${colKey}"></div>
         `;
-        
-        const body = colEl.querySelector('.column-body');
-        
-        if (col.items.length === 0) {
-          body.innerHTML = '<div class="empty-state">No items</div>';
+
+        const body = col.querySelector('.column-body');
+
+        if (colTasks.length === 0) {
+          body.innerHTML = '<div class="empty-state">No tasks</div>';
         } else {
-          for (const item of col.items) {
+          for (const task of colTasks) {
             const card = document.createElement('div');
             card.className = 'card';
-            
-            const tagClass = (tag) => {
-              const classes = ['infrastructure', 'research', 'market', 'planning', 'gov-tech'];
-              return classes.includes(tag) ? tag : '';
-            };
-            
+            card.onclick = () => openViewModal(task.id);
             card.innerHTML = `
-              <div class="card-header">
-                <div class="card-title">${item.title}</div>
-                <div class="priority-indicator priority-${item.priority || 'medium'}"></div>
-              </div>
-              <div class="card-description">${item.description}</div>
-              <div class="card-footer">
-                ${(item.tags || []).map(t => 
-                  '<span class="tag ' + tagClass(t) + '">' + t + '</span>'
-                ).join('')}
+              <div class="card-priority-bar priority-${task.priority}"></div>
+              <div class="card-title">${task.title}</div>
+              <div class="card-meta">
+                <span class="card-tag ${task.category}">${categoryLabels[task.category] || task.category}</span>
               </div>
             `;
-            
             body.appendChild(card);
           }
         }
-        
-        board.appendChild(colEl);
+
+        board.appendChild(col);
+      }
+
+      document.getElementById('taskCount').textContent = `${totalActive} active tasks`;
+    }
+
+    // Open add modal
+    function openAddModal() {
+      document.getElementById('modalTitle').textContent = 'Add Task';
+      document.getElementById('editTaskId').value = '';
+      document.getElementById('taskTitle').value = '';
+      document.getElementById('taskDescription').value = '';
+      document.getElementById('taskPriority').value = 'medium';
+      document.getElementById('taskCategory').value = 'mtr';
+      document.getElementById('taskStatus').value = 'todo';
+      document.getElementById('addModal').classList.add('active');
+    }
+
+    // Open view modal
+    function openViewModal(taskId) {
+      const tasks = loadTasks();
+      const task = tasks.find(t => t.id === taskId);
+      if (!task) return;
+
+      currentTaskId = taskId;
+
+      document.getElementById('viewTitle').textContent = task.title;
+      document.getElementById('viewDescription').textContent = task.description || 'No description';
+      document.getElementById('viewCategory').textContent = categoryLabels[task.category] || task.category;
+      document.getElementById('viewStatus').value = task.status;
+
+      const priorityEl = document.getElementById('viewPriority');
+      const priorityLabels = { high: '🔴 High', medium: '🟡 Medium', low: '🟢 Low' };
+      priorityEl.innerHTML = `<span class="task-priority-badge ${task.priority}">${priorityLabels[task.priority]}</span>`;
+
+      document.getElementById('viewModal').classList.add('active');
+    }
+
+    // Close modal
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.remove('active');
+      currentTaskId = null;
+    }
+
+    // Save task (add or edit)
+    function saveTask() {
+      const id = document.getElementById('editTaskId').value;
+      const title = document.getElementById('taskTitle').value.trim();
+      const description = document.getElementById('taskDescription').value.trim();
+      const priority = document.getElementById('taskPriority').value;
+      const category = document.getElementById('taskCategory').value;
+      const status = document.getElementById('taskStatus').value;
+
+      if (!title) {
+        alert('Please enter a title');
+        return;
+      }
+
+      const tasks = loadTasks();
+
+      if (id) {
+        // Edit existing
+        const idx = tasks.findIndex(t => t.id === id);
+        if (idx !== -1) {
+          tasks[idx] = { ...tasks[idx], title, description, priority, category, status };
+        }
+      } else {
+        // Add new
+        tasks.push({
+          id: 'task-' + Date.now(),
+          title,
+          description,
+          priority,
+          category,
+          status
+        });
+      }
+
+      saveTasks(tasks);
+      closeModal('addModal');
+      renderBoard();
+    }
+
+    // Move task to different status
+    function moveTask() {
+      if (!currentTaskId) return;
+      const newStatus = document.getElementById('viewStatus').value;
+      const tasks = loadTasks();
+      const idx = tasks.findIndex(t => t.id === currentTaskId);
+      if (idx !== -1) {
+        tasks[idx].status = newStatus;
+        saveTasks(tasks);
+        renderBoard();
       }
     }
 
-    loadData();
-    setInterval(loadData, 30000);
+    // Edit current task
+    function editCurrentTask() {
+      if (!currentTaskId) return;
+      const tasks = loadTasks();
+      const task = tasks.find(t => t.id === currentTaskId);
+      if (!task) return;
+
+      closeModal('viewModal');
+
+      document.getElementById('modalTitle').textContent = 'Edit Task';
+      document.getElementById('editTaskId').value = task.id;
+      document.getElementById('taskTitle').value = task.title;
+      document.getElementById('taskDescription').value = task.description || '';
+      document.getElementById('taskPriority').value = task.priority;
+      document.getElementById('taskCategory').value = task.category;
+      document.getElementById('taskStatus').value = task.status;
+      document.getElementById('addModal').classList.add('active');
+    }
+
+    // Delete task
+    function deleteTask() {
+      if (!currentTaskId) return;
+      if (!confirm('Delete this task?')) return;
+
+      const tasks = loadTasks();
+      const filtered = tasks.filter(t => t.id !== currentTaskId);
+      saveTasks(filtered);
+      closeModal('viewModal');
+      renderBoard();
+    }
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeModal('addModal');
+        closeModal('viewModal');
+      }
+      if (e.key === 'n' && !e.ctrlKey && !e.metaKey && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+        openAddModal();
+      }
+    });
+
+    // Click outside to close
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          overlay.classList.remove('active');
+          currentTaskId = null;
+        }
+      });
+    });
+
+    // Initial render
+    renderBoard();
   </script>
 </body>
 </html>
