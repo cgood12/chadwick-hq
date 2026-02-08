@@ -259,11 +259,10 @@
       letter-spacing: 0.02em;
     }
 
+    .card-tag.hq { background: rgba(139, 92, 246, 0.15); color: #a78bfa; }
     .card-tag.mtr { background: rgba(234, 88, 12, 0.15); color: #fb923c; }
-    .card-tag.infra { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
-    .card-tag.design { background: rgba(236, 72, 153, 0.15); color: #f472b6; }
-    .card-tag.marketing { background: rgba(34, 197, 94, 0.15); color: #4ade80; }
-    .card-tag.research { background: rgba(139, 92, 246, 0.15); color: #a78bfa; }
+    .card-tag.ideas { background: rgba(34, 197, 94, 0.15); color: #4ade80; }
+    .card-tag.security { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
 
     .empty-state {
       text-align: center;
@@ -525,13 +524,12 @@
             </select>
           </div>
           <div class="form-group">
-            <label class="form-label">Category</label>
+            <label class="form-label">Channel</label>
             <select class="form-select" id="taskCategory">
-              <option value="mtr">MTR Direct</option>
-              <option value="infra">Infrastructure</option>
-              <option value="design">Design</option>
-              <option value="marketing">Marketing</option>
-              <option value="research">Research</option>
+              <option value="hq">🏠 HQ</option>
+              <option value="mtr">🏡 MTR Project</option>
+              <option value="ideas">💡 Ideas & Research</option>
+              <option value="security">🔒 Security</option>
             </select>
           </div>
         </div>
@@ -602,28 +600,27 @@
     };
 
     const categoryLabels = {
-      mtr: 'MTR Direct',
-      infra: 'Infrastructure', 
-      design: 'Design',
-      marketing: 'Marketing',
-      research: 'Research'
+      hq: '🏠 HQ',
+      mtr: '🏡 MTR Project',
+      ideas: '💡 Ideas & Research',
+      security: '🔒 Security'
     };
 
     let currentTaskId = null;
 
-    // Default tasks for MTR Direct project
+    // Default tasks organized by Telegram channels
     const defaultTasks = [
       // Backlog
       { id: 'mtr-1', title: 'Set up Stripe payment processing', description: 'Integrate Stripe for monthly billing. Need to create Stripe account and add keys.', priority: 'medium', category: 'mtr', status: 'backlog' },
       { id: 'mtr-2', title: 'Integrate tenant screening API', description: 'Research and integrate credit/background check API (TransUnion, Experian, or similar).', priority: 'medium', category: 'mtr', status: 'backlog' },
       { id: 'mtr-3', title: 'Build lease generation system', description: 'Create MTR-specific lease templates with e-signature (DocuSign or HelloSign).', priority: 'medium', category: 'mtr', status: 'backlog' },
-      { id: 'mtr-4', title: 'Facebook Ads API integration', description: 'Set up Meta Business Suite and integrate Ads API for automated marketing.', priority: 'low', category: 'marketing', status: 'backlog' },
+      { id: 'mtr-4', title: 'Facebook Ads API integration', description: 'Set up Meta Business Suite and integrate Ads API for automated marketing.', priority: 'low', category: 'mtr', status: 'backlog' },
       
       // To Do
-      { id: 'mtr-5', title: 'Buy domain (mtrdirect.io)', description: 'Purchase domain from Namecheap or Cloudflare. Options: mtrdirect.io, mtrdirect.co, mtrhq.com', priority: 'high', category: 'infra', status: 'todo' },
+      { id: 'mtr-5', title: 'Buy domain (mtrdirect.io)', description: 'Purchase domain from Namecheap or Cloudflare. Options: mtrdirect.io, mtrdirect.co, mtrhq.com', priority: 'high', category: 'mtr', status: 'todo' },
       { id: 'mtr-6', title: 'Set up Formspree for booking site', description: 'Create Formspree account and connect to the direct booking site inquiry form.', priority: 'high', category: 'mtr', status: 'todo' },
-      { id: 'mtr-7', title: 'Record property walkthrough video', description: 'Film a walkthrough of the San Antonio property for the booking site.', priority: 'high', category: 'marketing', status: 'todo' },
-      { id: 'mtr-8', title: 'Connect custom domain to Vercel', description: 'After buying domain, connect it to the Vercel deployments.', priority: 'medium', category: 'infra', status: 'todo' },
+      { id: 'mtr-7', title: 'Record property walkthrough video', description: 'Film a walkthrough of the San Antonio property for the booking site.', priority: 'high', category: 'mtr', status: 'todo' },
+      { id: 'mtr-8', title: 'Connect custom domain to Vercel', description: 'After buying domain, connect it to the Vercel deployments.', priority: 'medium', category: 'mtr', status: 'todo' },
       
       // In Progress
       { id: 'mtr-9', title: 'Launch weekend prep', description: 'Final checks before going live. Test all forms, links, and mobile responsiveness.', priority: 'high', category: 'mtr', status: 'inProgress' },
@@ -631,10 +628,10 @@
       // Done
       { id: 'mtr-10', title: 'Build direct booking site', description: 'Created booking site with real photos, reviews, and inquiry form.', priority: 'high', category: 'mtr', status: 'done' },
       { id: 'mtr-11', title: 'Create SaaS landing page', description: 'Built MTR Direct SaaS landing page with waitlist.', priority: 'high', category: 'mtr', status: 'done' },
-      { id: 'mtr-12', title: 'Design host dashboard mockup', description: 'Created full SaaS dashboard with kanban pipeline.', priority: 'medium', category: 'design', status: 'done' },
+      { id: 'mtr-12', title: 'Design host dashboard mockup', description: 'Created full SaaS dashboard with kanban pipeline.', priority: 'medium', category: 'mtr', status: 'done' },
       { id: 'mtr-13', title: 'Write business plan', description: 'Comprehensive business plan with pricing tiers and ROI pitch.', priority: 'medium', category: 'mtr', status: 'done' },
-      { id: 'mtr-14', title: 'Deploy to Vercel', description: 'Both booking site and SaaS landing are live on Vercel.', priority: 'high', category: 'infra', status: 'done' },
-      { id: 'mtr-15', title: 'Set up Telegram channels', description: 'Created HQ, MTR Project, Ideas, and Security channels.', priority: 'medium', category: 'infra', status: 'done' },
+      { id: 'mtr-14', title: 'Deploy to Vercel', description: 'Both booking site and SaaS landing are live on Vercel.', priority: 'high', category: 'hq', status: 'done' },
+      { id: 'mtr-15', title: 'Set up Telegram channels', description: 'Created HQ, MTR Project, Ideas, and Security channels.', priority: 'medium', category: 'hq', status: 'done' },
     ];
 
     // Load tasks from localStorage or use defaults
