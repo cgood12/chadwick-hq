@@ -124,6 +124,23 @@
 
     .add-btn:hover { background: var(--accent-hover); }
 
+    .reset-btn {
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .reset-btn:hover {
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+
     /* Today View */
     .today-view {
       max-width: 1200px;
@@ -622,6 +639,7 @@
       <button class="add-btn" onclick="openAddModal()">
         <span>+</span> Add Task
       </button>
+      <button class="reset-btn" onclick="resetData()" title="Reset to defaults">↺</button>
     </div>
   </header>
 
@@ -867,6 +885,12 @@
 
     function saveTasks(tasks) {
       localStorage.setItem('chadwick-tasks', JSON.stringify(tasks));
+    }
+
+    function resetData() {
+      if (!confirm('Reset all tasks to defaults? This will delete your current tasks.')) return;
+      localStorage.removeItem('chadwick-tasks');
+      location.reload();
     }
 
     function showView(view) {
