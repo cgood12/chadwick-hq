@@ -315,6 +315,38 @@
     .board-view.active { display: block; }
     .today-view.hidden { display: none; }
 
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-secondary);
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 10px 18px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--accent);
+      color: var(--text-primary);
+    }
+
+    .filter-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+    }
+
     .board-container { padding: 24px; overflow-x: auto; }
 
     .board {
@@ -684,6 +716,13 @@
 
   <!-- Board View -->
   <div class="board-view" id="boardView">
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="setFilter('all')">📋 All</button>
+      <button class="filter-btn" onclick="setFilter('hq')">🏠 HQ</button>
+      <button class="filter-btn" onclick="setFilter('mtr')">🏡 MTR Project</button>
+      <button class="filter-btn" onclick="setFilter('ideas')">💡 Ideas</button>
+      <button class="filter-btn" onclick="setFilter('security')">🔒 Security</button>
+    </div>
     <div class="board-container">
       <div class="board" id="board"></div>
     </div>
@@ -799,6 +838,7 @@
 
     let currentTaskId = null;
     let currentView = 'today';
+    let currentFilter = 'all';
 
     const defaultTasks = [
       { id: 'mtr-1', title: 'Set up Stripe payment processing', description: 'Integrate Stripe for monthly billing. Need to create Stripe account and add keys.', priority: 'medium', category: 'mtr', status: 'backlog' },
@@ -911,8 +951,21 @@
       `;
     }
 
+    function setFilter(filter) {
+      currentFilter = filter;
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelector(`.filter-btn[onclick="setFilter('${filter}')"]`).classList.add('active');
+      renderBoard();
+    }
+
     function renderBoard() {
-      const tasks = loadTasks();
+      let tasks = loadTasks();
+      
+      // Apply channel filter
+      if (currentFilter !== 'all') {
+        tasks = tasks.filter(t => t.category === currentFilter);
+      }
+      
       const board = document.getElementById('board');
       board.innerHTML = '';
 
