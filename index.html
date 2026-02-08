@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chadwick HQ | Task Tracker</title>
+  <title>Chadwick HQ</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -26,18 +26,13 @@
       --danger: #ef4444;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--bg-primary);
       color: var(--text-primary);
       min-height: 100vh;
-      overflow-x: auto;
     }
 
     /* Header */
@@ -51,7 +46,12 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      backdrop-filter: blur(12px);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 32px;
     }
 
     .logo {
@@ -74,13 +74,32 @@
     .logo-text {
       font-size: 1.35rem;
       font-weight: 600;
-      letter-spacing: -0.02em;
     }
 
-    .logo-text span {
-      color: var(--text-muted);
-      font-weight: 400;
+    .logo-text span { color: var(--text-muted); font-weight: 400; }
+
+    .nav-tabs {
+      display: flex;
+      gap: 4px;
+      background: var(--bg-card);
+      padding: 4px;
+      border-radius: 10px;
     }
+
+    .nav-tab {
+      padding: 10px 20px;
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .nav-tab:hover { color: var(--text-primary); }
+    .nav-tab.active { background: var(--accent); color: white; }
 
     .header-right {
       display: flex;
@@ -103,41 +122,200 @@
       transition: all 0.2s;
     }
 
-    .add-btn:hover {
-      background: var(--accent-hover);
-      transform: translateY(-1px);
+    .add-btn:hover { background: var(--accent-hover); }
+
+    /* Today View */
+    .today-view {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px;
     }
 
-    .status-badge {
+    .today-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .today-grid { grid-template-columns: 1fr; }
+    }
+
+    .section {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .section-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .section-title {
+      font-size: 1rem;
+      font-weight: 600;
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 8px 14px;
+      gap: 10px;
+    }
+
+    .section-badge {
+      background: var(--bg-card);
+      color: var(--text-muted);
+      padding: 4px 10px;
+      border-radius: 10px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    .section-body { padding: 16px; }
+
+    .task-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 16px;
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 20px;
-      font-size: 0.8rem;
-      color: var(--text-secondary);
+      border-radius: 12px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
     }
 
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--success);
+    .task-item:last-child { margin-bottom: 0; }
+    .task-item:hover {
+      border-color: var(--accent);
+      transform: translateX(4px);
+    }
+
+    .task-priority {
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
-      animation: pulse 2s infinite;
+      margin-top: 5px;
+      flex-shrink: 0;
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
+    .task-priority.high { background: var(--danger); }
+    .task-priority.medium { background: var(--warning); }
+    .task-priority.low { background: var(--success); }
+
+    .task-content { flex: 1; }
+
+    .task-title {
+      font-size: 0.95rem;
+      font-weight: 500;
+      margin-bottom: 6px;
     }
 
-    /* Board */
-    .board-container {
-      padding: 24px;
-      overflow-x: auto;
+    .task-meta {
+      display: flex;
+      gap: 10px;
+      align-items: center;
     }
+
+    .task-tag {
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-weight: 500;
+    }
+
+    .task-tag.hq { background: rgba(139, 92, 246, 0.15); color: #a78bfa; }
+    .task-tag.mtr { background: rgba(234, 88, 12, 0.15); color: #fb923c; }
+    .task-tag.ideas { background: rgba(34, 197, 94, 0.15); color: #4ade80; }
+    .task-tag.security { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+
+    .empty-state {
+      text-align: center;
+      padding: 32px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .stat-value.accent { color: var(--accent); }
+    .stat-value.success { color: var(--success); }
+    .stat-value.warning { color: var(--warning); }
+    .stat-value.danger { color: var(--danger); }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Quick Links */
+    .quick-links {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .quick-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .quick-link:hover {
+      border-color: var(--accent);
+      background: var(--bg-hover);
+    }
+
+    .quick-link-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--accent-glow);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    /* Board View */
+    .board-view { display: none; overflow-x: auto; }
+    .board-view.active { display: block; }
+    .today-view.hidden { display: none; }
+
+    .board-container { padding: 24px; overflow-x: auto; }
 
     .board {
       display: flex;
@@ -146,8 +324,8 @@
     }
 
     .column {
-      width: 340px;
-      min-width: 340px;
+      width: 320px;
+      min-width: 320px;
       background: var(--bg-secondary);
       border: 1px solid var(--border);
       border-radius: 12px;
@@ -167,7 +345,6 @@
     .column-title {
       font-size: 0.9rem;
       font-weight: 600;
-      color: var(--text-primary);
       display: flex;
       align-items: center;
       gap: 10px;
@@ -179,7 +356,6 @@
       padding: 4px 10px;
       border-radius: 10px;
       font-size: 0.75rem;
-      font-weight: 500;
     }
 
     .column-body {
@@ -191,30 +367,18 @@
       gap: 10px;
     }
 
-    .column-body::-webkit-scrollbar {
-      width: 4px;
-    }
-
-    .column-body::-webkit-scrollbar-thumb {
-      background: var(--border);
-      border-radius: 2px;
-    }
-
-    /* Cards */
     .card {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 10px;
       padding: 16px;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.2s;
       position: relative;
     }
 
     .card:hover {
-      background: var(--bg-hover);
       border-color: var(--accent);
-      box-shadow: 0 0 0 1px var(--accent-glow), 0 4px 12px rgba(0,0,0,0.4);
       transform: translateY(-2px);
     }
 
@@ -234,42 +398,25 @@
     .card-title {
       font-size: 0.9rem;
       font-weight: 500;
-      color: var(--text-primary);
-      line-height: 1.4;
       margin-bottom: 8px;
       padding-left: 8px;
     }
 
     .card-meta {
-      display: flex;
-      align-items: center;
-      gap: 8px;
       padding-left: 8px;
-      flex-wrap: wrap;
     }
 
     .card-tag {
       padding: 4px 10px;
-      background: var(--accent-glow);
-      color: var(--accent);
       border-radius: 5px;
       font-size: 0.7rem;
       font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.02em;
     }
 
     .card-tag.hq { background: rgba(139, 92, 246, 0.15); color: #a78bfa; }
     .card-tag.mtr { background: rgba(234, 88, 12, 0.15); color: #fb923c; }
     .card-tag.ideas { background: rgba(34, 197, 94, 0.15); color: #4ade80; }
     .card-tag.security { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
-
-    .empty-state {
-      text-align: center;
-      padding: 32px 16px;
-      color: var(--text-muted);
-      font-size: 0.85rem;
-    }
 
     /* Modal */
     .modal-overlay {
@@ -284,9 +431,7 @@
       padding: 20px;
     }
 
-    .modal-overlay.active {
-      display: flex;
-    }
+    .modal-overlay.active { display: flex; }
 
     .modal {
       background: var(--bg-modal);
@@ -296,7 +441,6 @@
       max-width: 560px;
       max-height: 90vh;
       overflow-y: auto;
-      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
     }
 
     .modal-header {
@@ -306,10 +450,7 @@
       align-items: flex-start;
     }
 
-    .modal-title {
-      font-size: 1.25rem;
-      font-weight: 600;
-    }
+    .modal-title { font-size: 1.25rem; font-weight: 600; }
 
     .modal-close {
       background: none;
@@ -317,21 +458,13 @@
       color: var(--text-muted);
       font-size: 1.5rem;
       cursor: pointer;
-      padding: 0;
-      line-height: 1;
     }
 
-    .modal-close:hover {
-      color: var(--text-primary);
-    }
+    .modal-close:hover { color: var(--text-primary); }
 
-    .modal-body {
-      padding: 24px;
-    }
+    .modal-body { padding: 24px; }
 
-    .form-group {
-      margin-bottom: 20px;
-    }
+    .form-group { margin-bottom: 20px; }
 
     .form-label {
       display: block;
@@ -352,7 +485,6 @@
       color: var(--text-primary);
       font-size: 0.95rem;
       font-family: inherit;
-      transition: border-color 0.2s;
     }
 
     .form-input:focus, .form-textarea:focus, .form-select:focus {
@@ -360,10 +492,7 @@
       border-color: var(--accent);
     }
 
-    .form-textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
+    .form-textarea { min-height: 100px; resize: vertical; }
 
     .form-row {
       display: grid;
@@ -384,18 +513,12 @@
       font-size: 0.9rem;
       font-weight: 500;
       cursor: pointer;
-      transition: all 0.2s;
       border: none;
+      transition: all 0.2s;
     }
 
-    .btn-primary {
-      background: var(--accent);
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: var(--accent-hover);
-    }
+    .btn-primary { background: var(--accent); color: white; }
+    .btn-primary:hover { background: var(--accent-hover); }
 
     .btn-secondary {
       background: var(--bg-card);
@@ -403,10 +526,7 @@
       border: 1px solid var(--border);
     }
 
-    .btn-secondary:hover {
-      background: var(--bg-hover);
-      color: var(--text-primary);
-    }
+    .btn-secondary:hover { background: var(--bg-hover); color: var(--text-primary); }
 
     .btn-danger {
       background: rgba(239, 68, 68, 0.15);
@@ -414,21 +534,16 @@
       border: 1px solid rgba(239, 68, 68, 0.3);
     }
 
-    .btn-danger:hover {
-      background: rgba(239, 68, 68, 0.25);
-    }
+    .btn-danger:hover { background: rgba(239, 68, 68, 0.25); }
 
-    /* View Modal */
-    .task-detail {
-      margin-bottom: 20px;
-    }
+    /* View Modal extras */
+    .task-detail { margin-bottom: 20px; }
 
     .task-detail-label {
       font-size: 0.75rem;
       font-weight: 500;
       color: var(--text-muted);
       text-transform: uppercase;
-      letter-spacing: 0.05em;
       margin-bottom: 6px;
     }
 
@@ -448,53 +563,130 @@
       font-weight: 500;
     }
 
-    .task-priority-badge.high {
-      background: rgba(239, 68, 68, 0.15);
-      color: #f87171;
-    }
-
-    .task-priority-badge.medium {
-      background: rgba(245, 158, 11, 0.15);
-      color: #fbbf24;
-    }
-
-    .task-priority-badge.low {
-      background: rgba(34, 197, 94, 0.15);
-      color: #4ade80;
-    }
+    .task-priority-badge.high { background: rgba(239, 68, 68, 0.15); color: #f87171; }
+    .task-priority-badge.medium { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+    .task-priority-badge.low { background: rgba(34, 197, 94, 0.15); color: #4ade80; }
 
     .task-status-select {
       margin-top: 20px;
       padding-top: 20px;
       border-top: 1px solid var(--border);
     }
-
-    /* Column specific colors */
-    .column.backlog .column-header { border-bottom-color: #52525b; }
-    .column.todo .column-header { border-bottom-color: #3b82f6; }
-    .column.inProgress .column-header { border-bottom-color: #8b5cf6; }
-    .column.done .column-header { border-bottom-color: #22c55e; }
   </style>
 </head>
 <body>
   <header class="header">
-    <div class="logo">
-      <div class="logo-icon">🪐</div>
-      <div class="logo-text">Chadwick <span>HQ</span></div>
+    <div class="header-left">
+      <div class="logo">
+        <div class="logo-icon">🪐</div>
+        <div class="logo-text">Chadwick <span>HQ</span></div>
+      </div>
+      <div class="nav-tabs">
+        <button class="nav-tab active" onclick="showView('today')">Today</button>
+        <button class="nav-tab" onclick="showView('board')">Board</button>
+      </div>
     </div>
     <div class="header-right">
       <button class="add-btn" onclick="openAddModal()">
         <span>+</span> Add Task
       </button>
-      <div class="status-badge">
-        <div class="status-dot"></div>
-        <span id="taskCount">0 tasks</span>
-      </div>
     </div>
   </header>
 
-  <div class="board-container">
-    <div class="board" id="board"></div>
+  <!-- Today View -->
+  <div class="today-view" id="todayView">
+    <div class="today-grid">
+      <div class="main-content">
+        <!-- Priority Tasks -->
+        <div class="section" style="margin-bottom: 24px;">
+          <div class="section-header">
+            <div class="section-title">🔥 Top Priority</div>
+            <div class="section-badge" id="priorityCount">0</div>
+          </div>
+          <div class="section-body" id="priorityTasks"></div>
+        </div>
+
+        <!-- In Progress -->
+        <div class="section" style="margin-bottom: 24px;">
+          <div class="section-header">
+            <div class="section-title">⚡ In Progress</div>
+            <div class="section-badge" id="progressCount">0</div>
+          </div>
+          <div class="section-body" id="progressTasks"></div>
+        </div>
+
+        <!-- Recently Done -->
+        <div class="section">
+          <div class="section-header">
+            <div class="section-title">✅ Recently Done</div>
+          </div>
+          <div class="section-body" id="doneTasks"></div>
+        </div>
+      </div>
+
+      <div class="sidebar">
+        <!-- Stats -->
+        <div class="section" style="margin-bottom: 24px;">
+          <div class="section-header">
+            <div class="section-title">📊 Stats</div>
+          </div>
+          <div class="section-body">
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-value danger" id="statHigh">0</div>
+                <div class="stat-label">High Priority</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-value warning" id="statProgress">0</div>
+                <div class="stat-label">In Progress</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-value accent" id="statTodo">0</div>
+                <div class="stat-label">To Do</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-value success" id="statDone">0</div>
+                <div class="stat-label">Completed</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="section">
+          <div class="section-header">
+            <div class="section-title">🔗 Quick Links</div>
+          </div>
+          <div class="section-body">
+            <div class="quick-links">
+              <a href="https://mtr-direct-booking.vercel.app" target="_blank" class="quick-link">
+                <div class="quick-link-icon">🏡</div>
+                <span>MTR Booking Site</span>
+              </a>
+              <a href="https://mtr-saas.vercel.app" target="_blank" class="quick-link">
+                <div class="quick-link-icon">🚀</div>
+                <span>SaaS Landing Page</span>
+              </a>
+              <a href="https://github.com/cgood12" target="_blank" class="quick-link">
+                <div class="quick-link-icon">📦</div>
+                <span>GitHub Repos</span>
+              </a>
+              <a href="https://vercel.com/gustavs-projects-988bb37e" target="_blank" class="quick-link">
+                <div class="quick-link-icon">▲</div>
+                <span>Vercel Dashboard</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Board View -->
+  <div class="board-view" id="boardView">
+    <div class="board-container">
+      <div class="board" id="board"></div>
+    </div>
   </div>
 
   <!-- Add/Edit Modal -->
@@ -567,7 +759,7 @@
           <div id="viewPriority"></div>
         </div>
         <div class="task-detail">
-          <div class="task-detail-label">Category</div>
+          <div class="task-detail-label">Channel</div>
           <div class="task-detail-value" id="viewCategory">-</div>
         </div>
         <div class="task-status-select">
@@ -591,7 +783,6 @@
   </div>
 
   <script>
-    // Column configuration
     const columns = {
       backlog: { icon: '📋', title: 'Backlog' },
       todo: { icon: '📌', title: 'To Do' },
@@ -607,25 +798,18 @@
     };
 
     let currentTaskId = null;
+    let currentView = 'today';
 
-    // Default tasks organized by Telegram channels
     const defaultTasks = [
-      // Backlog
       { id: 'mtr-1', title: 'Set up Stripe payment processing', description: 'Integrate Stripe for monthly billing. Need to create Stripe account and add keys.', priority: 'medium', category: 'mtr', status: 'backlog' },
       { id: 'mtr-2', title: 'Integrate tenant screening API', description: 'Research and integrate credit/background check API (TransUnion, Experian, or similar).', priority: 'medium', category: 'mtr', status: 'backlog' },
       { id: 'mtr-3', title: 'Build lease generation system', description: 'Create MTR-specific lease templates with e-signature (DocuSign or HelloSign).', priority: 'medium', category: 'mtr', status: 'backlog' },
       { id: 'mtr-4', title: 'Facebook Ads API integration', description: 'Set up Meta Business Suite and integrate Ads API for automated marketing.', priority: 'low', category: 'mtr', status: 'backlog' },
-      
-      // To Do
       { id: 'mtr-5', title: 'Buy domain (mtrdirect.io)', description: 'Purchase domain from Namecheap or Cloudflare. Options: mtrdirect.io, mtrdirect.co, mtrhq.com', priority: 'high', category: 'mtr', status: 'todo' },
       { id: 'mtr-6', title: 'Set up Formspree for booking site', description: 'Create Formspree account and connect to the direct booking site inquiry form.', priority: 'high', category: 'mtr', status: 'todo' },
       { id: 'mtr-7', title: 'Record property walkthrough video', description: 'Film a walkthrough of the San Antonio property for the booking site.', priority: 'high', category: 'mtr', status: 'todo' },
       { id: 'mtr-8', title: 'Connect custom domain to Vercel', description: 'After buying domain, connect it to the Vercel deployments.', priority: 'medium', category: 'mtr', status: 'todo' },
-      
-      // In Progress
       { id: 'mtr-9', title: 'Launch weekend prep', description: 'Final checks before going live. Test all forms, links, and mobile responsiveness.', priority: 'high', category: 'mtr', status: 'inProgress' },
-      
-      // Done
       { id: 'mtr-10', title: 'Build direct booking site', description: 'Created booking site with real photos, reviews, and inquiry form.', priority: 'high', category: 'mtr', status: 'done' },
       { id: 'mtr-11', title: 'Create SaaS landing page', description: 'Built MTR Direct SaaS landing page with waitlist.', priority: 'high', category: 'mtr', status: 'done' },
       { id: 'mtr-12', title: 'Design host dashboard mockup', description: 'Created full SaaS dashboard with kanban pipeline.', priority: 'medium', category: 'mtr', status: 'done' },
@@ -634,32 +818,106 @@
       { id: 'mtr-15', title: 'Set up Telegram channels', description: 'Created HQ, MTR Project, Ideas, and Security channels.', priority: 'medium', category: 'hq', status: 'done' },
     ];
 
-    // Load tasks from localStorage or use defaults
     function loadTasks() {
       const stored = localStorage.getItem('chadwick-tasks');
-      if (stored) {
-        return JSON.parse(stored);
-      }
+      if (stored) return JSON.parse(stored);
       saveTasks(defaultTasks);
       return defaultTasks;
     }
 
-    // Save tasks to localStorage
     function saveTasks(tasks) {
       localStorage.setItem('chadwick-tasks', JSON.stringify(tasks));
     }
 
-    // Render the board
+    function showView(view) {
+      currentView = view;
+      document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+      document.querySelector(`.nav-tab[onclick="showView('${view}')"]`).classList.add('active');
+      
+      if (view === 'today') {
+        document.getElementById('todayView').classList.remove('hidden');
+        document.getElementById('boardView').classList.remove('active');
+        renderTodayView();
+      } else {
+        document.getElementById('todayView').classList.add('hidden');
+        document.getElementById('boardView').classList.add('active');
+        renderBoard();
+      }
+    }
+
+    function renderTodayView() {
+      const tasks = loadTasks();
+      
+      // Priority tasks (high priority, not done)
+      const priority = tasks.filter(t => t.priority === 'high' && t.status !== 'done').slice(0, 5);
+      const priorityContainer = document.getElementById('priorityTasks');
+      document.getElementById('priorityCount').textContent = priority.length;
+      
+      if (priority.length === 0) {
+        priorityContainer.innerHTML = '<div class="empty-state">No high-priority tasks 🎉</div>';
+      } else {
+        priorityContainer.innerHTML = priority.map(t => taskItemHTML(t)).join('');
+      }
+      
+      // In progress
+      const inProgress = tasks.filter(t => t.status === 'inProgress');
+      const progressContainer = document.getElementById('progressTasks');
+      document.getElementById('progressCount').textContent = inProgress.length;
+      
+      if (inProgress.length === 0) {
+        progressContainer.innerHTML = '<div class="empty-state">Nothing in progress</div>';
+      } else {
+        progressContainer.innerHTML = inProgress.map(t => taskItemHTML(t)).join('');
+      }
+      
+      // Recently done (last 3)
+      const done = tasks.filter(t => t.status === 'done').slice(-3).reverse();
+      const doneContainer = document.getElementById('doneTasks');
+      
+      if (done.length === 0) {
+        doneContainer.innerHTML = '<div class="empty-state">No completed tasks yet</div>';
+      } else {
+        doneContainer.innerHTML = done.map(t => `
+          <div class="task-item" style="opacity: 0.7;" onclick="openViewModal('${t.id}')">
+            <div class="task-priority ${t.priority}"></div>
+            <div class="task-content">
+              <div class="task-title" style="text-decoration: line-through;">${t.title}</div>
+              <div class="task-meta">
+                <span class="task-tag ${t.category}">${categoryLabels[t.category] || t.category}</span>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+      
+      // Stats
+      document.getElementById('statHigh').textContent = tasks.filter(t => t.priority === 'high' && t.status !== 'done').length;
+      document.getElementById('statProgress').textContent = tasks.filter(t => t.status === 'inProgress').length;
+      document.getElementById('statTodo').textContent = tasks.filter(t => t.status === 'todo' || t.status === 'backlog').length;
+      document.getElementById('statDone').textContent = tasks.filter(t => t.status === 'done').length;
+    }
+
+    function taskItemHTML(t) {
+      return `
+        <div class="task-item" onclick="openViewModal('${t.id}')">
+          <div class="task-priority ${t.priority}"></div>
+          <div class="task-content">
+            <div class="task-title">${t.title}</div>
+            <div class="task-meta">
+              <span class="task-tag ${t.category}">${categoryLabels[t.category] || t.category}</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
     function renderBoard() {
       const tasks = loadTasks();
       const board = document.getElementById('board');
       board.innerHTML = '';
 
-      let totalActive = 0;
-
       for (const [colKey, colMeta] of Object.entries(columns)) {
         const colTasks = tasks.filter(t => t.status === colKey);
-        if (colKey !== 'done') totalActive += colTasks.length;
 
         const col = document.createElement('div');
         col.className = `column ${colKey}`;
@@ -671,7 +929,7 @@
             </div>
             <span class="column-count">${colTasks.length}</span>
           </div>
-          <div class="column-body" id="col-${colKey}"></div>
+          <div class="column-body"></div>
         `;
 
         const body = col.querySelector('.column-body');
@@ -696,11 +954,8 @@
 
         board.appendChild(col);
       }
-
-      document.getElementById('taskCount').textContent = `${totalActive} active tasks`;
     }
 
-    // Open add modal
     function openAddModal() {
       document.getElementById('modalTitle').textContent = 'Add Task';
       document.getElementById('editTaskId').value = '';
@@ -712,14 +967,12 @@
       document.getElementById('addModal').classList.add('active');
     }
 
-    // Open view modal
     function openViewModal(taskId) {
       const tasks = loadTasks();
       const task = tasks.find(t => t.id === taskId);
       if (!task) return;
 
       currentTaskId = taskId;
-
       document.getElementById('viewTitle').textContent = task.title;
       document.getElementById('viewDescription').textContent = task.description || 'No description';
       document.getElementById('viewCategory').textContent = categoryLabels[task.category] || task.category;
@@ -732,13 +985,11 @@
       document.getElementById('viewModal').classList.add('active');
     }
 
-    // Close modal
     function closeModal(modalId) {
       document.getElementById(modalId).classList.remove('active');
       currentTaskId = null;
     }
 
-    // Save task (add or edit)
     function saveTask() {
       const id = document.getElementById('editTaskId').value;
       const title = document.getElementById('taskTitle').value.trim();
@@ -747,37 +998,22 @@
       const category = document.getElementById('taskCategory').value;
       const status = document.getElementById('taskStatus').value;
 
-      if (!title) {
-        alert('Please enter a title');
-        return;
-      }
+      if (!title) { alert('Please enter a title'); return; }
 
       const tasks = loadTasks();
 
       if (id) {
-        // Edit existing
         const idx = tasks.findIndex(t => t.id === id);
-        if (idx !== -1) {
-          tasks[idx] = { ...tasks[idx], title, description, priority, category, status };
-        }
+        if (idx !== -1) tasks[idx] = { ...tasks[idx], title, description, priority, category, status };
       } else {
-        // Add new
-        tasks.push({
-          id: 'task-' + Date.now(),
-          title,
-          description,
-          priority,
-          category,
-          status
-        });
+        tasks.push({ id: 'task-' + Date.now(), title, description, priority, category, status });
       }
 
       saveTasks(tasks);
       closeModal('addModal');
-      renderBoard();
+      if (currentView === 'today') renderTodayView(); else renderBoard();
     }
 
-    // Move task to different status
     function moveTask() {
       if (!currentTaskId) return;
       const newStatus = document.getElementById('viewStatus').value;
@@ -786,11 +1022,10 @@
       if (idx !== -1) {
         tasks[idx].status = newStatus;
         saveTasks(tasks);
-        renderBoard();
+        if (currentView === 'today') renderTodayView(); else renderBoard();
       }
     }
 
-    // Edit current task
     function editCurrentTask() {
       if (!currentTaskId) return;
       const tasks = loadTasks();
@@ -798,7 +1033,6 @@
       if (!task) return;
 
       closeModal('viewModal');
-
       document.getElementById('modalTitle').textContent = 'Edit Task';
       document.getElementById('editTaskId').value = task.id;
       document.getElementById('taskTitle').value = task.title;
@@ -809,41 +1043,28 @@
       document.getElementById('addModal').classList.add('active');
     }
 
-    // Delete task
     function deleteTask() {
       if (!currentTaskId) return;
       if (!confirm('Delete this task?')) return;
-
-      const tasks = loadTasks();
-      const filtered = tasks.filter(t => t.id !== currentTaskId);
-      saveTasks(filtered);
+      const tasks = loadTasks().filter(t => t.id !== currentTaskId);
+      saveTasks(tasks);
       closeModal('viewModal');
-      renderBoard();
+      if (currentView === 'today') renderTodayView(); else renderBoard();
     }
 
-    // Keyboard shortcuts
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        closeModal('addModal');
-        closeModal('viewModal');
-      }
-      if (e.key === 'n' && !e.ctrlKey && !e.metaKey && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
-        openAddModal();
-      }
+      if (e.key === 'Escape') { closeModal('addModal'); closeModal('viewModal'); }
+      if (e.key === 'n' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') openAddModal();
     });
 
-    // Click outside to close
     document.querySelectorAll('.modal-overlay').forEach(overlay => {
       overlay.addEventListener('click', (e) => {
-        if (e.target === overlay) {
-          overlay.classList.remove('active');
-          currentTaskId = null;
-        }
+        if (e.target === overlay) { overlay.classList.remove('active'); currentTaskId = null; }
       });
     });
 
     // Initial render
-    renderBoard();
+    renderTodayView();
   </script>
 </body>
 </html>
